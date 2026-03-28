@@ -103,6 +103,34 @@ const ELEVATION_ITEMS = [
   { id: "elev-9", color: "from-stone-600 to-amber-600" },
 ];
 
+const COMPLETED_PROJECTS = Array.from({ length: 7 }, (_, i) => ({
+  src: `/assets/completedProjects/${i + 1}.jpg`,
+  title: `Completed Project ${i + 1}`,
+}));
+
+const ELEVATION_DESIGNS = Array.from({ length: 9 }, (_, i) => ({
+  src: `/assets/elevationDesigns/${i + 1}.jpg`,
+  title: `Elevation Design ${i + 1}`,
+}));
+
+const ONGOING_PROJECTS = [
+  "GOPANAKOPPA 1",
+  "GOPANAKOPPA 2",
+  "RENUKA NAGAR 1",
+  "RENUKA NAGAR 2",
+  "SHRYEA PARK 1",
+  "SHRYEA PARK 1_1",
+  "SHRYEA PARK 2",
+  "SHRYEA PARK 2_2",
+  "SUNCITY GARDEN 1",
+  "SUNCITY GARDEN 2",
+].map((title) => ({
+  src: `/assets/ongoingProjects/${title}.jpg`,
+  title,
+}));
+
+const toPublicUrl = (path: string) => encodeURI(path);
+
 const SAFETY_POINTS = [
   "Comprehensive safety training for all workers",
   "Restricted site access & supervision",
@@ -528,19 +556,27 @@ export default function App() {
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {GALLERY_ITEMS.map(({ id, color: itemColor }, i) => (
+            {COMPLETED_PROJECTS.map((project, i) => (
               <motion.div
-                key={id}
+                key={project.title}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.05 }}
                 data-ocid={`gallery.item.${i + 1}`}
-                className={`rounded-xl bg-gradient-to-br ${itemColor} aspect-video flex items-end p-4 cursor-pointer hover:opacity-90 transition-opacity`}
+                className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
               >
-                <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
-                  Project {i + 1}
-                </span>
+                <img
+                  src={toPublicUrl(project.src)}
+                  alt={project.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute left-4 bottom-4">
+                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
+                    {project.title}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -559,19 +595,66 @@ export default function App() {
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {ELEVATION_ITEMS.map(({ id, color: itemColor }, i) => (
+            {ELEVATION_DESIGNS.map((design, i) => (
               <motion.div
-                key={id}
+                key={design.title}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.04 }}
                 data-ocid={`elevation.item.${i + 1}`}
-                className={`rounded-xl bg-gradient-to-br ${itemColor} aspect-video flex items-end p-4 cursor-pointer hover:opacity-90 transition-opacity`}
+                className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
               >
-                <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
-                  Elevation {i + 1}
-                </span>
+                <img
+                  src={toPublicUrl(design.src)}
+                  alt={design.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute left-4 bottom-4">
+                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
+                    {design.title}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERY - Ongoing Projects */}
+      <section id="ongoing" className="py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-recon-orange font-semibold text-sm uppercase tracking-widest mb-2">
+              Live Work
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold uppercase text-recon-dark">
+              Ongoing Projects Gallery
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {ONGOING_PROJECTS.map((project, i) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: i * 0.04 }}
+                data-ocid={`ongoing.item.${i + 1}`}
+                className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+              >
+                <img
+                  src={toPublicUrl(project.src)}
+                  alt={project.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute left-4 bottom-4">
+                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
+                    {project.title}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -742,20 +825,12 @@ export default function App() {
                       Phone
                     </div>
                     <div className="text-recon-gray text-sm flex flex-wrap gap-1">
-                      {[
-                        ["tel:+919741579578", "97415 79578"],
-                        ["tel:+919019836590", "90198 36590"],
-                        ["tel:+917795985354", "77959 85354"],
-                        ["tel:+919980170504", "99801 70504"],
-                      ].map(([href, num]) => (
-                        <a
-                          key={href}
-                          href={href}
-                          className="hover:text-recon-orange transition-colors"
-                        >
-                          {num}
-                        </a>
-                      ))}
+                      <a
+                        href="tel:+919535776994"
+                        className="hover:text-recon-orange transition-colors"
+                      >
+                        +91 9535776994
+                      </a>
                     </div>
                   </div>
                 </li>
@@ -768,12 +843,12 @@ export default function App() {
                       WhatsApp
                     </div>
                     <a
-                      href="https://wa.me/919019836590"
+                      href="https://wa.me/919535776994"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-green-600 font-medium text-sm hover:text-green-700"
                     >
-                      9019836590
+                      +91 9535776994
                     </a>
                   </div>
                 </li>
@@ -786,10 +861,10 @@ export default function App() {
                       Email
                     </div>
                     <a
-                      href="mailto:reconintofficial99@gmail.com"
+                      href="mailto:enquiries@reconbuild.in"
                       className="text-recon-orange text-sm hover:text-orange-700 break-all"
                     >
-                      reconintofficial99@gmail.com
+                      enquiries@reconbuild.in
                     </a>
                   </div>
                 </li>
@@ -821,15 +896,15 @@ export default function App() {
                 </p>
                 <div className="flex flex-col gap-3">
                   <a
-                    href="tel:+919741579578"
+                    href="tel:+919535776994"
                     data-ocid="contact.phone.button"
                     className="flex items-center gap-3 bg-recon-orange text-white px-5 py-3 rounded-full font-semibold text-sm hover:bg-orange-700 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
-                    Call 97415 79578
+                    Call +91 9535776994
                   </a>
                   <a
-                    href="https://wa.me/919019836590"
+                    href="https://wa.me/919535776994"
                     data-ocid="contact.whatsapp.button"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -839,7 +914,7 @@ export default function App() {
                     WhatsApp Us
                   </a>
                   <a
-                    href="mailto:reconintofficial99@gmail.com"
+                    href="mailto:enquiries@reconbuild.in"
                     data-ocid="contact.email.button"
                     className="flex items-center gap-3 bg-white/15 border border-white/20 text-white px-5 py-3 rounded-full font-semibold text-sm hover:bg-white/25 transition-colors"
                   >
@@ -931,19 +1006,19 @@ export default function App() {
                 <li className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-recon-orange flex-shrink-0" />
                   <a
-                    href="tel:+919741579578"
+                    href="tel:+919535776994"
                     className="text-white/50 text-sm hover:text-recon-orange transition-colors"
                   >
-                    97415 79578
+                    +91 9535776994
                   </a>
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-recon-orange flex-shrink-0" />
                   <a
-                    href="mailto:reconintofficial99@gmail.com"
+                    href="mailto:enquiries@reconbuild.in"
                     className="text-white/50 text-sm hover:text-recon-orange transition-colors break-all"
                   >
-                    reconintofficial99@gmail.com
+                    enquiries@reconbuild.in
                   </a>
                 </li>
                 <li className="flex items-center gap-2">
