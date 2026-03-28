@@ -52,10 +52,10 @@ const SERVICES = [
 ];
 
 const PACKAGES = [
-  { name: "Classic", price: "\u20b91,872", featured: false },
-  { name: "Standard", price: "\u20b92,151", featured: false },
-  { name: "Premium-I", price: "\u20b92,511", featured: true },
-  { name: "Premium-II", price: "\u20b92,691", featured: false },
+  { name: "Classic", price: "₹1,872", featured: false },
+  { name: "Standard", price: "₹2,151", featured: false },
+  { name: "Premium-I", price: "₹2,511", featured: true },
+  { name: "Premium-II", price: "₹2,691", featured: false },
 ];
 
 const PROJECTS = [
@@ -374,7 +374,7 @@ export default function App() {
                 />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-recon-orange text-white rounded-2xl p-4 shadow-lg">
-                <div className="text-2xl font-extrabold">\u20b91,872</div>
+                <div className="text-2xl font-extrabold">₹1,872</div>
                 <div className="text-xs font-medium opacity-90">
                   Starting per sq.ft
                 </div>
@@ -1024,7 +1024,7 @@ export default function App() {
                 <li className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-recon-orange flex-shrink-0" />
                   <span className="text-white/50 text-sm">
-                    9 AM \u2013 8 PM (Closed Sundays)
+                    9 AM – 8 PM (Closed Sundays)
                   </span>
                 </li>
               </ul>
@@ -1033,17 +1033,9 @@ export default function App() {
 
           <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-white/40 text-xs">
-              \u00a9 {new Date().getFullYear()} RECON Interiors and
+              © {new Date().getFullYear()} RECON Interiors and
               Constructions. All rights reserved.
             </p>
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/30 text-xs hover:text-white/60 transition-colors"
-            >
-              Built with \u2764\ufe0f using caffeine.ai
-            </a>
           </div>
         </div>
       </footer>
