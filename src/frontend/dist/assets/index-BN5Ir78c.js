@@ -22330,43 +22330,52 @@ const PROJECTS = [
   {
     title: "Renovation & Restoration",
     description: "80-year-old mud wall building renovated at Keshwapur Hubli.",
-    color: "from-amber-800 to-amber-600"
+    color: "from-amber-800 to-amber-600",
+    image: "/assets/completedProjects/1.jpg"
   },
   {
     title: "Residential Building Renovation",
     description: "20-year-old building at Kalidas Nagar Hubli renovated.",
-    color: "from-stone-700 to-stone-500"
+    color: "from-stone-700 to-stone-500",
+    image: "/assets/completedProjects/2.jpg"
   },
   {
     title: "Innovative Building Project",
     description: "Residential building using interlocking mud-blocks at Hebballi village.",
-    color: "from-teal-800 to-teal-600"
+    color: "from-teal-800 to-teal-600",
+    image: "/assets/completedProjects/3.jpg"
   },
   {
     title: "Architectural Residential Building",
     description: "Modern residential building at Gabbur village, Hubli.",
-    color: "from-slate-700 to-slate-500"
+    color: "from-slate-700 to-slate-500",
+    image: "/assets/completedProjects/4.jpg"
   }
 ];
-const GALLERY_ITEMS = [
-  { id: "project-1", color: "from-[#C9772A] to-amber-700" },
-  { id: "project-2", color: "from-[#1F3545] to-slate-600" },
-  { id: "project-3", color: "from-stone-600 to-stone-400" },
-  { id: "project-4", color: "from-amber-700 to-yellow-600" },
-  { id: "project-5", color: "from-slate-700 to-slate-500" },
-  { id: "project-6", color: "from-teal-700 to-teal-500" }
-];
-const ELEVATION_ITEMS = [
-  { id: "elev-1", color: "from-[#1F3545] to-blue-800" },
-  { id: "elev-2", color: "from-stone-700 to-stone-500" },
-  { id: "elev-3", color: "from-[#C9772A] to-orange-600" },
-  { id: "elev-4", color: "from-slate-600 to-slate-400" },
-  { id: "elev-5", color: "from-amber-800 to-amber-600" },
-  { id: "elev-6", color: "from-teal-800 to-teal-600" },
-  { id: "elev-7", color: "from-zinc-700 to-zinc-500" },
-  { id: "elev-8", color: "from-blue-900 to-blue-700" },
-  { id: "elev-9", color: "from-stone-600 to-amber-600" }
-];
+const COMPLETED_PROJECTS = Array.from({ length: 7 }, (_, i) => ({
+  src: `/assets/completedProjects/${i + 1}.jpg`,
+  title: `Completed Project ${i + 1}`
+}));
+const ELEVATION_DESIGNS = Array.from({ length: 9 }, (_, i) => ({
+  src: `/assets/elevationDesigns/${i + 1}.jpg`,
+  title: `Elevation Design ${i + 1}`
+}));
+const ONGOING_PROJECTS = [
+  "GOPANAKOPPA 1",
+  "GOPANAKOPPA 2",
+  "RENUKA NAGAR 1",
+  "RENUKA NAGAR 2",
+  "SHRYEA PARK 1",
+  "SHRYEA PARK 1_1",
+  "SHRYEA PARK 2",
+  "SHRYEA PARK 2_2",
+  "SUNCITY GARDEN 1",
+  "SUNCITY GARDEN 2"
+].map((title) => ({
+  src: `/assets/ongoingProjects/${title}.jpg`,
+  title
+}));
+const toPublicUrl = (path) => encodeURI(path);
 const SAFETY_POINTS = [
   "Comprehensive safety training for all workers",
   "Restricted site access & supervision",
@@ -22381,17 +22390,26 @@ const VASTU_BENEFITS = [
 function App() {
   const [menuOpen, setMenuOpen] = reactExports.useState(false);
   const [scrolled, setScrolled] = reactExports.useState(false);
+  const [activeImage, setActiveImage] = reactExports.useState(null);
   reactExports.useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+  const closeImage = () => setActiveImage(null);
   const scrollTo = (href) => {
-    var _a2;
+    const target = document.querySelector(href);
     setMenuOpen(false);
-    (_a2 = document.querySelector(href)) == null ? void 0 : _a2.scrollIntoView({ behavior: "smooth" });
+    if (!target) return;
+    window.setTimeout(() => {
+      if (href === "#home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 120);
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-recon-bg font-sans", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen min-w-full overflow-x-hidden bg-recon-bg font-sans", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "header",
       {
@@ -22553,7 +22571,7 @@ function App() {
             /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-orange font-semibold text-sm uppercase tracking-widest mb-2", children: "Who We Are" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-extrabold uppercase text-recon-dark mb-6", children: "About Us" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-gray leading-relaxed text-base mb-6", children: "RECON Interiors and Constructions is committed to providing quick turnaround and highly practical, cost-effective solutions for engineering and design requirements. Known for excellent customer service, collaboration with developers, architects, and contractors, we ensure projects move forward without delays." }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4", children: [
               ["12+", "Years Experience"],
               ["150+", "Projects Completed"],
               ["50+", "Happy Clients"],
@@ -22583,7 +22601,7 @@ function App() {
               }
             ) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute -bottom-4 -left-4 bg-recon-orange text-white rounded-2xl p-4 shadow-lg", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-2xl font-extrabold", children: "\\u20b91,872" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-2xl font-extrabold", children: "₹1,872" }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-medium opacity-90", children: "Starting per sq.ft" })
             ] })
           ]
@@ -22690,13 +22708,14 @@ function App() {
           "data-ocid": `projects.item.${i + 1}`,
           className: "bg-white rounded-2xl overflow-hidden shadow-card",
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "div",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-40 overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
               {
-                className: `h-40 bg-gradient-to-br ${project.color} flex items-end p-4`,
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(Building2, { className: "w-10 h-10 text-white/40" })
+                src: project.image,
+                alt: project.title,
+                className: "h-full w-full object-cover"
               }
-            ),
+            ) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-5", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold text-recon-dark text-sm mb-2", children: project.title }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-gray text-xs leading-relaxed", children: project.description })
@@ -22711,21 +22730,36 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-orange font-semibold text-sm uppercase tracking-widest mb-2", children: "Portfolio" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-extrabold uppercase text-recon-dark", children: "Completed Projects Gallery" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: GALLERY_ITEMS.map(({ id: id2, color: itemColor }, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: COMPLETED_PROJECTS.map((project, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
         motion.div,
         {
+          role: "button",
+          tabIndex: 0,
           initial: { opacity: 0, scale: 0.95 },
           whileInView: { opacity: 1, scale: 1 },
           viewport: { once: true },
           transition: { duration: 0.35, delay: i * 0.05 },
           "data-ocid": `gallery.item.${i + 1}`,
-          className: `rounded-xl bg-gradient-to-br ${itemColor} aspect-video flex items-end p-4 cursor-pointer hover:opacity-90 transition-opacity`,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full", children: [
-            "Project ",
-            i + 1
-          ] })
+          className: "group relative overflow-hidden rounded-xl aspect-video cursor-pointer",
+          onClick: () => setActiveImage(project),
+          onKeyDown: (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setActiveImage(project);
+            }
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: toPublicUrl(project.src),
+                alt: project.title,
+                className: "absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" })
+          ]
         },
-        id2
+        project.title
       )) })
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "py-16 md:py-20 bg-recon-bg", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
@@ -22733,23 +22767,115 @@ function App() {
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-orange font-semibold text-sm uppercase tracking-widest mb-2", children: "Design Showcase" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-extrabold uppercase text-recon-dark", children: "Elevation Designs Gallery" })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: ELEVATION_ITEMS.map(({ id: id2, color: itemColor }, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: ELEVATION_DESIGNS.map((design, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
         motion.div,
         {
+          role: "button",
+          tabIndex: 0,
           initial: { opacity: 0, scale: 0.95 },
           whileInView: { opacity: 1, scale: 1 },
           viewport: { once: true },
           transition: { duration: 0.35, delay: i * 0.04 },
           "data-ocid": `elevation.item.${i + 1}`,
-          className: `rounded-xl bg-gradient-to-br ${itemColor} aspect-video flex items-end p-4 cursor-pointer hover:opacity-90 transition-opacity`,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full", children: [
-            "Elevation ",
-            i + 1
-          ] })
+          className: "group relative overflow-hidden rounded-xl aspect-video cursor-pointer",
+          onClick: () => setActiveImage(design),
+          onKeyDown: (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setActiveImage(design);
+            }
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: toPublicUrl(design.src),
+                alt: design.title,
+                className: "absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" })
+          ]
         },
-        id2
+        design.title
       )) })
     ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "ongoing", className: "py-16 md:py-20 bg-white", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center mb-12", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-recon-orange font-semibold text-sm uppercase tracking-widest mb-2", children: "Live Work" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl md:text-4xl font-extrabold uppercase text-recon-dark", children: "Ongoing Projects Gallery" })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 gap-4", children: ONGOING_PROJECTS.map((project, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        motion.div,
+        {
+          role: "button",
+          tabIndex: 0,
+          initial: { opacity: 0, scale: 0.95 },
+          whileInView: { opacity: 1, scale: 1 },
+          viewport: { once: true },
+          transition: { duration: 0.35, delay: i * 0.04 },
+          "data-ocid": `ongoing.item.${i + 1}`,
+          className: "group relative overflow-hidden rounded-xl aspect-video cursor-pointer",
+          onClick: () => setActiveImage(project),
+          onKeyDown: (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setActiveImage(project);
+            }
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: toPublicUrl(project.src),
+                alt: project.title,
+                className: "absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" })
+          ]
+        },
+        project.title
+      )) })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: activeImage && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        className: "fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4",
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        onClick: closeImage,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          motion.div,
+          {
+            className: "relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl bg-slate-950 shadow-2xl",
+            initial: { scale: 0.96, opacity: 0 },
+            animate: { scale: 1, opacity: 1 },
+            exit: { scale: 0.96, opacity: 0 },
+            transition: { duration: 0.2 },
+            onClick: (event) => event.stopPropagation(),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: closeImage,
+                  className: "absolute right-4 top-4 z-10 rounded-full bg-black/50 p-3 text-white hover:bg-black",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "h-4 w-4" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "img",
+                {
+                  src: toPublicUrl(activeImage.src),
+                  alt: activeImage.title,
+                  className: "h-[80vh] w-full object-contain bg-black"
+                }
+              )
+            ]
+          }
+        )
+      }
+    ) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "safety", className: "py-16 md:py-20 bg-recon-navy", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid md:grid-cols-2 gap-12 items-center", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         motion.div,
@@ -22784,7 +22910,7 @@ function App() {
           whileInView: { opacity: 1, x: 0 },
           viewport: { once: true },
           transition: { duration: 0.5, delay: 0.1 },
-          className: "grid grid-cols-2 gap-4",
+          className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
           children: [
             ["100%", "Safety Compliance"],
             ["0", "Safety Incidents"],
@@ -22864,20 +22990,14 @@ function App() {
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 bg-recon-orange/10 rounded-lg flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-5 h-5 text-recon-orange" }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-recon-dark text-sm mb-1", children: "Phone" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-recon-gray text-sm flex flex-wrap gap-1", children: [
-                  ["tel:+919741579578", "97415 79578"],
-                  ["tel:+919019836590", "90198 36590"],
-                  ["tel:+917795985354", "77959 85354"],
-                  ["tel:+919980170504", "99801 70504"]
-                ].map(([href, num]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-recon-gray text-sm flex flex-wrap gap-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "a",
                   {
-                    href,
+                    href: "tel:+919535776994",
                     className: "hover:text-recon-orange transition-colors",
-                    children: num
-                  },
-                  href
-                )) })
+                    children: "+91 9535776994"
+                  }
+                ) })
               ] })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex gap-4", children: [
@@ -22887,11 +23007,11 @@ function App() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "a",
                   {
-                    href: "https://wa.me/919019836590",
+                    href: "https://wa.me/919535776994",
                     target: "_blank",
                     rel: "noopener noreferrer",
                     className: "text-green-600 font-medium text-sm hover:text-green-700",
-                    children: "9019836590"
+                    children: "+91 9535776994"
                   }
                 )
               ] })
@@ -22903,9 +23023,9 @@ function App() {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "a",
                   {
-                    href: "mailto:reconintofficial99@gmail.com",
+                    href: "mailto:enquiries@reconbuild.in",
                     className: "text-recon-orange text-sm hover:text-orange-700 break-all",
-                    children: "reconintofficial99@gmail.com"
+                    children: "enquiries@reconbuild.in"
                   }
                 )
               ] })
@@ -22928,19 +23048,19 @@ function App() {
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "a",
                 {
-                  href: "tel:+919741579578",
+                  href: "tel:+919535776994",
                   "data-ocid": "contact.phone.button",
                   className: "flex items-center gap-3 bg-recon-orange text-white px-5 py-3 rounded-full font-semibold text-sm hover:bg-orange-700 transition-colors",
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-4 h-4" }),
-                    "Call 97415 79578"
+                    "Call +91 9535776994"
                   ]
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "a",
                 {
-                  href: "https://wa.me/919019836590",
+                  href: "https://wa.me/919535776994",
                   "data-ocid": "contact.whatsapp.button",
                   target: "_blank",
                   rel: "noopener noreferrer",
@@ -22954,7 +23074,7 @@ function App() {
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 "a",
                 {
-                  href: "mailto:reconintofficial99@gmail.com",
+                  href: "mailto:enquiries@reconbuild.in",
                   "data-ocid": "contact.email.button",
                   className: "flex items-center gap-3 bg-white/15 border border-white/20 text-white px-5 py-3 rounded-full font-semibold text-sm hover:bg-white/25 transition-colors",
                   children: [
@@ -23014,9 +23134,9 @@ function App() {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  href: "tel:+919741579578",
+                  href: "tel:+919535776994",
                   className: "text-white/50 text-sm hover:text-recon-orange transition-colors",
-                  children: "97415 79578"
+                  children: "+91 9535776994"
                 }
               )
             ] }),
@@ -23025,36 +23145,24 @@ function App() {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "a",
                 {
-                  href: "mailto:reconintofficial99@gmail.com",
+                  href: "mailto:enquiries@reconbuild.in",
                   className: "text-white/50 text-sm hover:text-recon-orange transition-colors break-all",
-                  children: "reconintofficial99@gmail.com"
+                  children: "enquiries@reconbuild.in"
                 }
               )
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: "flex items-center gap-2", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "w-4 h-4 text-recon-orange flex-shrink-0" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-white/50 text-sm", children: "9 AM \\u2013 8 PM (Closed Sundays)" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-white/50 text-sm", children: "9 AM – 8 PM (Closed Sundays)" })
             ] })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-white/40 text-xs", children: [
-          "\\u00a9 ",
-          (/* @__PURE__ */ new Date()).getFullYear(),
-          " RECON Interiors and Constructions. All rights reserved."
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "a",
-          {
-            href: `https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(typeof window !== "undefined" ? window.location.hostname : "")}`,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            className: "text-white/30 text-xs hover:text-white/60 transition-colors",
-            children: "Built with \\u2764\\ufe0f using caffeine.ai"
-          }
-        )
-      ] })
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-white/40 text-xs", children: [
+        "© ",
+        (/* @__PURE__ */ new Date()).getFullYear(),
+        " RECON Interiors and Constructions. All rights reserved."
+      ] }) })
     ] }) })
   ] });
 }
@@ -28739,7 +28847,7 @@ async function loadConfig() {
   }
 }
 const ONE_HOUR_IN_NANOSECONDS = BigInt(36e11);
-const DEFAULT_IDENTITY_PROVIDER = "https://id.ai";
+const DEFAULT_IDENTITY_PROVIDER = "https://identity.internetcomputer.org/";
 const InternetIdentityReactContext = reactExports.createContext(
   void 0
 );

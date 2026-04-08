@@ -63,22 +63,26 @@ const PROJECTS = [
     title: "Renovation & Restoration",
     description: "80-year-old mud wall building renovated at Keshwapur Hubli.",
     color: "from-amber-800 to-amber-600",
+    image: "/assets/completedProjects/1.jpg",
   },
   {
     title: "Residential Building Renovation",
     description: "20-year-old building at Kalidas Nagar Hubli renovated.",
     color: "from-stone-700 to-stone-500",
+    image: "/assets/completedProjects/2.jpg",
   },
   {
     title: "Innovative Building Project",
     description:
       "Residential building using interlocking mud-blocks at Hebballi village.",
     color: "from-teal-800 to-teal-600",
+    image: "/assets/completedProjects/3.jpg",
   },
   {
     title: "Architectural Residential Building",
     description: "Modern residential building at Gabbur village, Hubli.",
     color: "from-slate-700 to-slate-500",
+    image: "/assets/completedProjects/4.jpg",
   },
 ];
 
@@ -147,6 +151,7 @@ const VASTU_BENEFITS = [
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeImage, setActiveImage] = useState<{ src: string; title: string } | null>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -154,13 +159,23 @@ export default function App() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  const closeImage = () => setActiveImage(null);
+
   const scrollTo = (href: string) => {
+    const target = document.querySelector(href);
     setMenuOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    if (!target) return;
+    window.setTimeout(() => {
+      if (href === "#home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 120);
   };
 
   return (
-    <div className="min-h-screen bg-recon-bg font-sans">
+    <div className="min-h-screen min-w-full overflow-x-hidden bg-recon-bg font-sans">
       {/* STICKY HEADER */}
       <header
         data-ocid="nav.panel"
@@ -341,7 +356,7 @@ export default function App() {
                 customer service, collaboration with developers, architects, and
                 contractors, we ensure projects move forward without delays.
               </p>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   ["12+", "Years Experience"],
                   ["150+", "Projects Completed"],
@@ -525,10 +540,12 @@ export default function App() {
                 data-ocid={`projects.item.${i + 1}`}
                 className="bg-white rounded-2xl overflow-hidden shadow-card"
               >
-                <div
-                  className={`h-40 bg-gradient-to-br ${project.color} flex items-end p-4`}
-                >
-                  <Building2 className="w-10 h-10 text-white/40" />
+                <div className="h-40 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-recon-dark text-sm mb-2">
@@ -559,24 +576,27 @@ export default function App() {
             {COMPLETED_PROJECTS.map((project, i) => (
               <motion.div
                 key={project.title}
+                role="button"
+                tabIndex={0}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.05 }}
                 data-ocid={`gallery.item.${i + 1}`}
                 className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+                onClick={() => setActiveImage(project)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    setActiveImage(project);
+                  }
+                }}
               >
                 <img
                   src={toPublicUrl(project.src)}
                   alt={project.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute left-4 bottom-4">
-                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
-                    {project.title}
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" />
               </motion.div>
             ))}
           </div>
@@ -598,24 +618,27 @@ export default function App() {
             {ELEVATION_DESIGNS.map((design, i) => (
               <motion.div
                 key={design.title}
+                role="button"
+                tabIndex={0}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.04 }}
                 data-ocid={`elevation.item.${i + 1}`}
                 className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+                onClick={() => setActiveImage(design)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    setActiveImage(design);
+                  }
+                }}
               >
                 <img
                   src={toPublicUrl(design.src)}
                   alt={design.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute left-4 bottom-4">
-                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
-                    {design.title}
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" />
               </motion.div>
             ))}
           </div>
@@ -637,29 +660,66 @@ export default function App() {
             {ONGOING_PROJECTS.map((project, i) => (
               <motion.div
                 key={project.title}
+                role="button"
+                tabIndex={0}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: i * 0.04 }}
                 data-ocid={`ongoing.item.${i + 1}`}
                 className="group relative overflow-hidden rounded-xl aspect-video cursor-pointer"
+                onClick={() => setActiveImage(project)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    setActiveImage(project);
+                  }
+                }}
               >
                 <img
                   src={toPublicUrl(project.src)}
                   alt={project.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute left-4 bottom-4">
-                  <span className="text-white font-semibold text-sm bg-black/30 px-3 py-1 rounded-full">
-                    {project.title}
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-black/10 transition-opacity duration-300 group-hover:bg-black/20" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeImage}
+          >
+            <motion.div
+              className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-3xl bg-slate-950 shadow-2xl"
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={closeImage}
+                className="absolute right-4 top-4 z-10 rounded-full bg-black/50 p-3 text-white hover:bg-black"
+              >
+                <X className="h-4 w-4" />
+              </button>
+              <img
+                src={toPublicUrl(activeImage.src)}
+                alt={activeImage.title}
+                className="h-[80vh] w-full object-contain bg-black"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* SAFETY */}
       <section id="safety" className="py-16 md:py-20 bg-recon-navy">
@@ -700,7 +760,7 @@ export default function App() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="grid grid-cols-2 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {[
                 ["100%", "Safety Compliance"],
